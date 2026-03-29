@@ -5,7 +5,7 @@ project('sway-systemd', [],
 
 enabled = get_option('autoload-configs')
 configs = {
-  'config.d/10-systemd-session.conf.in':        true,
+  'config.d/10-systemd-session.conf.in':        enabled.contains('all') or enabled.contains('session'),
   'config.d/10-systemd-cgroups.conf.in':        enabled.contains('all') or enabled.contains('cgroups'),
   'config.d/95-system-keyboard-config.conf.in': enabled.contains('all') or enabled.contains('locale1'),
 }
