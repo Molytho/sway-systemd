@@ -8,7 +8,6 @@ configs = {
   'config.d/10-systemd-session.conf.in':        true,
   'config.d/10-systemd-cgroups.conf.in':        enabled.contains('all') or enabled.contains('cgroups'),
   'config.d/95-system-keyboard-config.conf.in': enabled.contains('all') or enabled.contains('locale1'),
-  'config.d/95-xdg-desktop-autostart.conf.in':  enabled.contains('all') or enabled.contains('autostart'),
 }
 
 scripts = [
@@ -20,7 +19,9 @@ scripts = [
 
 unit_files = [
   'units/sway-session.target',
-  'units/sway-xdg-autostart.target',
+]
+unit_template = [
+  'units/wait-sni-ready.service.in'
 ]
 
 systemd = dependency('systemd')
@@ -49,5 +50,14 @@ foreach config, enabled : configs
     input: config,
     output: '@BASENAME@',
     install_dir: enabled ? conf_dir : data_dir,
+  )
+endforeach
+
+foreach template: unit_template
+  configure_file(
+    configuration: conf_data,
+    input: template,
+    output: '@BASENAME@',
+    install_dir: systemd.get_variable(pkgconfig: 'systemduserunitdir'),
   )
 endforeach

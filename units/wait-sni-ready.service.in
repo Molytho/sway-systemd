@@ -1,0 +1,7 @@
+[Unit]
+Description="Wait until tray dbus socket appeared"
+
+[Service]
+Type=oneshot
+ExecStart=@execdir@/wait-sni-ready
+RemainAfterExit=yes

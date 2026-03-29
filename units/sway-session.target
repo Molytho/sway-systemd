@@ -9,3 +9,8 @@ PropagatesStopTo=graphical-session.target
 Wants=graphical-session-pre.target
 After=graphical-session-pre.target
 PropagatesStopTo=graphical-session-pre.target
+
+# Wait for SNI DBus interface
+Wants=wait-sni-ready.service
+After=wait-sni-ready.service
+PropagatesStopTo=wait-sni-ready.service
