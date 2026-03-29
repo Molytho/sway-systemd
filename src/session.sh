@@ -28,7 +28,7 @@
 #    package here provides and uses `sway-session.target` which would bind to
 #    the `graphical-session.target`.
 #
-# 5. Stop the target and unset the variables when the compositor exits.
+# 5. Unset the variables when the compositor exits.
 #
 # References:
 #  - https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start
@@ -43,7 +43,6 @@ VARIABLES="DESKTOP_SESSION XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_T
 VARIABLES="${VARIABLES} DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY"
 VARIABLES="${VARIABLES} XCURSOR_THEME XCURSOR_SIZE"
 SESSION_TARGET="sway-session.target"
-SESSION_SHUTDOWN_TARGET="sway-session-shutdown.target"
 WITH_CLEANUP=1
 
 print_usage() {
@@ -123,8 +122,6 @@ fi
 
 # declare cleanup handler and run it on script termination via kill or Ctrl-C
 session_cleanup () {
-    # stop the session target and unset the variables
-    systemctl --user start --job-mode=replace-irreversibly "$SESSION_SHUTDOWN_TARGET"
     if [ -n "$VARIABLES" ]; then
         # shellcheck disable=SC2086
         systemctl --user unset-environment $VARIABLES

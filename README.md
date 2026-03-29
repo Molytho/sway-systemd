@@ -49,13 +49,6 @@ user session environment is set, and stopped before the compositor exits.
 An user service may depend on or reference `sway-session.target` only if it is
 specific for Sway. Otherwise, it's recommended to use `graphical-session.target`.
 
-A special `sway-session-shutdown.target` can be used to stop the
-`graphical-session.target` and the `sway-session.target` with all the contained
-services.\
-`systemctl start sway-session-shutdown.target` will apply the `Conflicts=`
-statements in the unit file and ensure that everything is exited, something that
-`systemctl stop sway-session.target` is unable to guarantee.
-
 ### Session script
 
 The [`session.sh`](./src/session.sh) script is responsible for importing
