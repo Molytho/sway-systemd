@@ -47,7 +47,7 @@ SD_UNIT_FORMAT = "app-{app_id}-{unique}.scope"
 LAUNCHER_APPS = ["nwgbar", "nwgdmenu", "nwggrid", "onagre"]
 
 SD_UNIT_ESCAPE_RE = re.compile(r"[^\w:.\\]", re.ASCII)
-IS_SYSTEMD_RUN_RE = re.compile(r".*/run-p[0-9]+-i[0-9]+.scope", re.ASCII)
+IS_SYSTEMD_RUN_RE = re.compile(r".*/run-p[0-9]+-i[0-9]+.(?:scope|service)", re.ASCII)
 
 def escape_app_id(app_id: str) -> str:
     """Escape app_id for systemd APIs.
